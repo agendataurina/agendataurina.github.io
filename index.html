@@ -75,29 +75,32 @@ function avisos(){const ua=navigator.userAgent;let h='';
  if(!/iPhone|iPad/i.test(ua))h+='<div class="aviso">📲 ¿Tienes Android? Descarga gratis la <a href="https://play.google.com/store/apps/details?id=agenda.taurina2">app de Agenda Taurina</a> con notificaciones y todo el contenido.</div>';
  else if(/iPhone|iPad/i.test(ua)&&!navigator.standalone)h+='<div class="aviso">📌 Instálala en tu iPhone: pulsa <b>Compartir</b> y después <b>Añadir a pantalla de inicio</b>.</div>';
  return h;}
-function listaDia(d,titDia){if(!d)return '<div class="card"><div class="hd"><h2>'+esc(titDia||'')+'</h2></div></div><div class="vacio">No hay festejos programados para este día.</div>';
- const g={};d.o.forEach(o=>{const p=provDe[o[3]]||'OTROS';(g[p]=g[p]||[]).push(o);});
- let h='<div class="card"><div class="hd"><img class="logo" src="'+IMG+'cards/c2286063_'+d.i+'_logo.png" alt=""><h2>'+esc(titDia||d.t)+'</h2></div></div>';
- [...ORDEN_PROV,'OTROS'].forEach(p=>{if(!g[p])return;h+='<div class="prov">'+p+' <span>'+g[p].length+'</span></div>';g[p].forEach(o=>{const s=S[o[3]];const sp=s&&s.c.some(c=>/SUSPEND|APLAZ/i.test(c.t))?' ⚠️':'';h+='<a class="btn" href="#p/'+o[3]+'">'+esc(o[1])+sp+'</a>';});});
+function intro(t){return '<div class="card"><div class="d" style="padding-top:14px">'+t+'</div></div>';}
+function proximos(){const h0=hoy();const ks=Object.values(DAYS).filter(x=>x.date>h0).sort((a,b)=>a.date-b.date).slice(0,5);if(!ks.length)return '';return '<div class="prov">PRÓXIMOS DÍAS</div>'+ks.map(x=>'<a class="btn" href="#d/'+key(x.date)+'">'+esc(x.t)+' · '+x.o.length+(x.o.length==1?' pueblo':' pueblos')+'</a>').join('');}
+function listaDia(d,titDia){if(!d)return '<div class="card"><div class="hd"><h2>'+esc(titDia||'')+'</h2></div></div><div class="vacio">No hay festejos programados para este día.</div>'+proximos();
+ const dk=key(d.date);const g={};d.o.forEach(o=>{const p=provDe[o[3]]||'OTROS';(g[p]=g[p]||[]).push(o);});
+ let h='<div class="card"><div class="hd"><img class="logo" src="'+IMG+'cards/c2286063_'+d.i+'_logo.png" alt=""><div><h2>'+esc(titDia||d.t)+'</h2><h3>'+d.o.length+(d.o.length==1?' pueblo con festejos':' pueblos con festejos')+'</h3></div></div></div>';
+ [...ORDEN_PROV,'OTROS'].forEach(p=>{if(!g[p])return;h+='<div class="prov">'+p+' <span>'+g[p].length+'</span></div>';g[p].forEach(o=>{const s=S[o[3]];if(!s){h+='<a class="btn" href="#p/'+o[3]+'">'+esc(o[1])+'</a>';return;}const sp=s.c.some(c=>/SUSPEND|APLAZ/i.test(c.t));const c0=s.c[0];const cd=s.c.find(c=>{const x=parseDia(c.t);return x&&key(x)===dk;});
+  h+='<div class="card'+(sp?' susp':'')+'"><div class="hd"><img class="logo" src="'+ico(o[3])+'" alt="" onerror="this.style.visibility=\'hidden\'"><div><h2>'+esc(s.t)+(sp?' ⚠️':'')+'</h2><h3>'+esc(c0?c0.t:'')+'</h3></div></div>'+(cd&&cd.d?'<div class="d">'+esc(cd.d)+'</div>':'')+'<div class="btns"><a class="btn" href="#p/'+o[3]+'">Ver cartel y programa completo</a></div></div>';});});
  return h;}
 function vHoy(){setNav('n-hoy');titulo('Festejos de hoy');const h=hoy();const d=DAYS[key(h)];
- return avisos()+listaDia(d,DIAS[h.getDay()]+' '+h.getDate()+' DE '+MESES[h.getMonth()]);}
+ return avisos()+listaDia(d,DIAS[h.getDay()]+' '+h.getDate()+' DE '+MESES[h.getMonth()])+(d?proximos():'');}
 function vCal(){setNav('n-cal');titulo('Calendario');const ks=Object.values(DAYS).sort((a,b)=>a.date-b.date);if(!ks.length)return '<div class="vacio">Sin festejos.</div>';
  const meses=[...new Set(ks.map(x=>x.date.getMonth()))];const hk=key(hoy());let h='';
  meses.forEach(m=>{h+='<div class="mes"><h2>'+MESES[m]+' '+YEAR+'</h2><div class="grid">'+['L','M','X','J','V','S','D'].map(x=>'<b>'+x+'</b>').join('');
   const first=new Date(YEAR,m,1);const pad=(first.getDay()+6)%7;for(let i=0;i<pad;i++)h+='<span></span>';
   const n=new Date(YEAR,m+1,0).getDate();for(let dd=1;dd<=n;dd++){const k=YEAR+'-'+(m+1)+'-'+dd;const d=DAYS[k];
    h+=d?'<a href="#d/'+k+'" class="'+(k===hk?'hoy':'')+'">'+dd+'<i>'+d.o.length+'</i></a>':'<span>'+dd+'</span>';}
-  h+='</div></div>';});return h;}
+  h+='</div></div>';});return intro('Calendario de festejos populares y festejos taurinos. Pulsa un día marcado en rojo para ver los pueblos que tienen festejos, con sus horarios, ganaderías, peñas y toros. El número pequeño indica cuántos pueblos celebran festejos ese día.')+h;}
 function vDia(k){setNav('');const d=DAYS[k];titulo(d?d.t:'Día');return listaDia(d);}
-function vProvs(){setNav('n-prov');titulo('Provincias');return ORDEN_PROV.filter(p=>PROV[p]).map(p=>'<a class="tile" href="#pr/'+encodeURIComponent(p)+'"><img src="'+IMG+'seccs/'+PROV_ID[p]+'_ico.png" onerror="this.style.visibility=\'hidden\'"><span>'+p+'<small>'+PROV[p].length+' festejos</small></span></a>').join('');}
+function vProvs(){setNav('n-prov');titulo('Provincias');return intro('Festejos ordenados por provincias. En cada provincia encontrarás los pueblos con fiestas próximas y, dentro de cada pueblo, el cartel oficial, el programa taurino de cada día y la ubicación en el mapa.')+ORDEN_PROV.filter(p=>PROV[p]).map(p=>'<a class="tile" href="#pr/'+encodeURIComponent(p)+'"><img src="'+IMG+'seccs/'+PROV_ID[p]+'_ico.png" onerror="this.style.visibility=\'hidden\'"><span>'+p+'<small>'+PROV[p].length+' festejos</small></span></a>').join('');}
 function tile(id){const s=S[id];if(!s)return '';const c1=s.c[0];return '<a class="tile" href="#p/'+id+'"><img src="'+ico(id)+'" onerror="this.style.visibility=\'hidden\'"><span>'+esc(s.t)+'<small>'+esc(c1?c1.t:'')+'</small></span></a>';}
-function vProv(p){setNav('');titulo(p);const l=PROV[p]||[];return l.length?l.map(tile).join(''):'<div class="vacio">Sin festejos ahora mismo.</div>';}
+function vProv(p){setNav('');titulo(p);const l=PROV[p]||[];return intro('Pueblos de esta zona con festejos populares y festejos taurinos próximos. Entra en cada pueblo para ver el cartel, los horarios y los toros de cada día.')+(l.length?l.map(tile).join(''):'<div class="vacio">Sin festejos ahora mismo.</div>');}
 function vBus(){setNav('n-bus');titulo('Buscar');setTimeout(()=>{const i=document.getElementById('q');i.focus();i.oninput=()=>{document.getElementById('res').innerHTML=res(i.value);};},0);
- return '<input id="q" class="search" placeholder="Pueblo, ganadería, toro, peña…"><div id="res">'+res('')+'</div>';}
+ return intro('Busca en toda la agenda por el nombre del pueblo, la ganadería, el nombre del toro o la peña organizadora.')+'<input id="q" class="search" placeholder="Pueblo, ganadería, toro, peña…"><div id="res">'+res('')+'</div>';}
 function res(q){q=norm(q).trim();if(q.length<2)return '<div class="vacio">Escribe al menos 2 letras.</div>';
  return Object.keys(provDe).filter(id=>{const s=S[id];return s&&norm(s.t+' '+s.kw+' '+s.ds+' '+s.c.map(c=>c.t+' '+c.d).join(' ')).includes(q);}).map(tile).join('')||'<div class="vacio">Sin resultados.</div>';}
-function vPueblo(id){setNav('');const s=S[id];if(!s)return '<div class="vacio">No encontrado.</div>';titulo(s.t);
+function vPueblo(id){setNav('');const s=S[id];if(!s){titulo('Festejo finalizado');return '<div class="card"><div class="d" style="padding-top:14px">Este festejo ya se ha celebrado o ya no está en la agenda. Consulta los festejos de hoy y de los próximos días:</div><div class="btns"><a class="btn" href="#hoy">Ver festejos de hoy</a></div></div>'+proximos();}titulo(s.t);
  return s.c.map((c,i)=>{const fotos=c.o.filter(o=>o[2]);const btns=c.o.filter(o=>!o[2]);const su=/SUSPEND|APLAZ/i.test(c.t);
   let h='<div class="card'+(su?' susp':'')+'">';
   if(i===0&&c.m)h+='<img class="main" src="'+IMG+'cards/c2286063_'+c.i+'_main.png" alt="Cartel">';
