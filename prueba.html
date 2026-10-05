@@ -76,7 +76,7 @@ const PROV_ID={'CASTELLÓN':29322615,'VALENCIA':29322619,'ALICANTE':29322649,'TE
 function hoy(){const n=new Date(Date.now()-CAMBIO_HORA*3600e3);return new Date(n.getFullYear(),n.getMonth(),n.getDate());}
 function ico(id){return IMG+'seccs/'+id+'_ico.png';}
 function titulo(t){document.getElementById('ttl').textContent=t;document.title=t+' · Agenda Taurina';}
-function setNav(id){['n-ini','n-hoy','n-cal','n-not','n-mas'].forEach(n=>document.getElementById(n).classList.toggle('on',n===id));document.getElementById('back').style.display=id?'none':'';}
+function setNav(id){document.querySelector('body>nav').style.display=id==='n-ini'?'none':'';['n-ini','n-hoy','n-cal','n-not','n-mas'].forEach(n=>document.getElementById(n).classList.toggle('on',n===id));document.getElementById('back').style.display=id?'none':'';}
 function avisos(){const ua=navigator.userAgent;let h='';
  if(!/iPhone|iPad/i.test(ua))h+='<div class="aviso">📲 ¿Tienes Android? Descarga gratis la <a href="https://play.google.com/store/apps/details?id=agenda.taurina2">app de Agenda Taurina</a> con notificaciones y todo el contenido.</div>';
  else if(/iPhone|iPad/i.test(ua)&&!navigator.standalone)h+='<div class="aviso">📌 Instálala en tu iPhone: pulsa <b>Compartir</b> y después <b>Añadir a pantalla de inicio</b>.</div>';
