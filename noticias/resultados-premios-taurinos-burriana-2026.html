@@ -24,9 +24,14 @@ p,li{line-height:1.6;font-size:16px}ul{padding-left:20px}
 .nota{font-size:14px;color:#555;font-style:italic}
 .btn{display:block;background:var(--rojo);color:#fff;text-decoration:none;font-weight:700;padding:13px 14px;border-radius:8px;margin:14px 0 0;text-align:center}
 .pie{text-align:center;padding:20px 10px 30px;color:#888;font-size:12.5px;line-height:1.7}.pie b{color:#555;letter-spacing:1px}.pie a{color:var(--rojo2);text-decoration:none;font-weight:600;margin:0 5px}
+nav.tabs{position:sticky;top:60px;z-index:4;display:flex;background:#fff;border-bottom:1px solid #ddd}
+nav.tabs a{flex:1;text-align:center;padding:10px 2px;font-size:12px;font-weight:600;color:var(--gris);text-decoration:none;border-bottom:3px solid transparent}
+nav.tabs a.on{color:var(--rojo2);border-color:var(--rojo2)}
+header .back{background:none;border:0;color:#fff;font-size:26px;line-height:1;padding:0 6px 2px 0;cursor:pointer}
 </style></head>
 <body>
-<header><a href="/"><img src="/escudo.webp" alt="Agenda Taurina"><b>Agenda Taurina</b></a></header>
+<header><button class="back" aria-label="Atrás" onclick="if(document.referrer.indexOf(location.host)>-1)history.back();else location.href='/#noticias'">‹</button><a href="/"><img src="/escudo.webp" alt="Agenda Taurina"><b>Agenda Taurina</b></a></header>
+<nav class="tabs"><a href="/#inicio">INICIO</a><a href="/#hoy">HOY</a><a href="/#calendario">CALENDARIO</a><a href="/#noticias" class="on">NOTICIAS</a><a href="/#mas">MÁS</a></nav>
 <main>
 <article>
 <div class="cat">RESULTADOS</div>
@@ -50,7 +55,8 @@ p,li{line-height:1.6;font-size:16px}ul{padding-left:20px}
 <p>El alcalde, Jorge Monferrer, y la concejala de Fiestas, Paloma Boix, agradecieron el trabajo desinteresado de peñas y comisiones durante estos 50 años y se comprometieron a mantener viva la tradición taurina de la ciudad.</p>
 
 <p class="nota">Fuente: <a href="https://burriana.es/burriana-entrega-los-premios-taurinos-de-la-misericordia-en-el-50-aniversario-de-la-comision-del-toro/" target="_blank" rel="noopener">Ajuntament de Burriana</a>.</p>
-<a class="btn" href="/">Ver los festejos de hoy</a>
+<a class="btn" href="/#hoy">Ver los festejos de hoy</a>
+<a class="btn" href="/#noticias" style="background:#555">Ver todas las noticias</a>
 </article>
 </main>
 <footer class="pie"><b>AGENDA TAURINA</b><br>Hecho por un aficionado, para aficionados<br><a href="/">Inicio</a><a href="/?sobre">Sobre nosotros</a><a href="/privacidad.html">Privacidad</a><a href="https://forms.gle/X8bcLiYASuuj9MW89" target="_blank" rel="noopener">Contacto</a></footer>
