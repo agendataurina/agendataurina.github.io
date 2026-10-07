@@ -28,9 +28,11 @@ nav.tabs{position:sticky;top:60px;z-index:4;display:flex;background:#fff;border-
 nav.tabs a{flex:1;text-align:center;padding:10px 2px;font-size:12px;font-weight:600;color:var(--gris);text-decoration:none;border-bottom:3px solid transparent}
 nav.tabs a.on{color:var(--rojo2);border-color:var(--rojo2)}
 header .back{background:none;border:0;color:#fff;font-size:26px;line-height:1;padding:0 6px 2px 0;cursor:pointer}
+html.app header a{pointer-events:none}
+html.app nav.tabs,html.app .pie a,html.app .btn[href^="/#"]{display:none!important}
 </style></head>
-<body>
-<header><button class="back" aria-label="Atrás" onclick="if(document.referrer.indexOf(location.host)>-1)history.back();else location.href='/#noticias'">‹</button><a href="/"><img src="/escudo.webp" alt="Agenda Taurina"><b>Agenda Taurina</b></a></header>
+<body><script>if(/[?&]app=1/.test(location.search)){document.documentElement.classList.add("app");}</script>
+<header><button class="back" aria-label="Atrás" onclick="if(document.referrer.indexOf(location.host)>-1)history.back();else location.href=(/app=1/.test(location.search)?'/noticias/':'/#noticias')">‹</button><a href="/"><img src="/escudo.webp" alt="Agenda Taurina"><b>Agenda Taurina</b></a></header>
 <nav class="tabs"><a href="/#inicio">INICIO</a><a href="/#hoy">HOY</a><a href="/#calendario">CALENDARIO</a><a href="/#noticias" class="on">NOTICIAS</a><a href="/#mas">MÁS</a></nav>
 <main>
 <article>
