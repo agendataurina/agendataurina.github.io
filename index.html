@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Agenda Taurina · Festejos populares y festejos taurinos</title><meta name="description" content="Agenda gratuita de festejos populares y festejos taurinos de Castellón, Valencia, Alicante, Teruel y toda España: horarios, ganaderías, peñas y toros de cada pueblo, actualizada a diario."><link rel="icon" type="image/png" sizes="192x192" href="/favicon.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.json"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3013339727814717" crossorigin="anonymous"></script><meta name="apple-mobile-web-app-title" content="Agenda Taurina">
+<title>Agenda Taurina España · Festejos populares y taurinos de hoy</title><meta name="description" content="Festejos populares de toros en Castellón, Valencia, Alicante, Teruel, Tarragona y toda España: toros embolados, encierros, vaquillas, ganaderías y toros de cada pueblo, al día."><meta property="og:title" content="Agenda Taurina España · Festejos populares y taurinos de hoy"><meta property="og:description" content="Festejos populares de toros en Castellón, Valencia, Alicante, Teruel, Tarragona y toda España: toros embolados, encierros, vaquillas, ganaderías y toros de cada pueblo, al día."><link rel="icon" type="image/png" sizes="192x192" href="/favicon.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/manifest.json"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3013339727814717" crossorigin="anonymous"></script><meta name="apple-mobile-web-app-title" content="Agenda Taurina">
 <meta name="theme-color" content="#B71C1C">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <style>
@@ -75,7 +75,7 @@ const ORDEN_PROV=['CASTELLÓN','VALENCIA','ALICANTE','TERUEL','TARRAGONA','RESTO
 const PROV_ID={'CASTELLÓN':29322615,'VALENCIA':29322619,'ALICANTE':29322649,'TERUEL':29322654,'TARRAGONA':30023173,'RESTO DE ESPAÑA':29322663};
 function hoy(){const n=new Date(Date.now()-CAMBIO_HORA*3600e3);return new Date(n.getFullYear(),n.getMonth(),n.getDate());}
 function ico(id){return IMG+'seccs/'+id+'_ico.png';}
-function titulo(t){document.getElementById('ttl').textContent=t;document.title=t+' · Agenda Taurina';}
+function titulo(t){document.getElementById('ttl').textContent=t;document.title=(t==='Agenda Taurina'||t==='Festejos de hoy')?'Agenda Taurina España · Festejos populares y taurinos de hoy':t+' · Agenda Taurina España';}
 function setNav(id){document.querySelector('body>nav').style.display=id==='n-ini'?'none':'';['n-ini','n-hoy','n-cal','n-not','n-mas'].forEach(n=>document.getElementById(n).classList.toggle('on',n===id));document.getElementById('back').style.display=id?'none':'';}
 function avisos(){const ua=navigator.userAgent;let h='';
  if(!/iPhone|iPad/i.test(ua))h+='<div class="aviso">📲 ¿Tienes Android? Descarga gratis la <a href="https://play.google.com/store/apps/details?id=agenda.taurina2">app de Agenda Taurina</a> con notificaciones y todo el contenido.</div>';
