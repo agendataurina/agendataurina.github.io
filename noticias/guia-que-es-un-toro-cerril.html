@@ -30,6 +30,7 @@ nav.tabs a.on{color:var(--rojo2);border-color:var(--rojo2)}
 header .back{background:none;border:0;color:#fff;font-size:26px;line-height:1;padding:0 6px 2px 0;cursor:pointer}
 html.app header a{pointer-events:none}
 html.app footer.pie,html.app nav.tabs,html.app .pie a,html.app .btn[href^="/#"]{display:none!important}
+article img{max-width:100%;height:auto;display:block;margin:10px auto;border-radius:8px}
 </style></head>
 <body><script>if(/[?&]app=1/.test(location.search)){document.documentElement.classList.add("app");document.addEventListener("DOMContentLoaded",function(){var a=document.querySelector("header a");if(a)a.removeAttribute("href");});}</script>
 <header><button class="back" aria-label="Atrás" onclick="if(document.referrer.indexOf(location.host)>-1)history.back();else location.href=(/app=1/.test(location.search)?'/noticias/':'/#noticias')">‹</button><a href="/"><img src="/escudo.webp" alt="Agenda Taurina"><b>Agenda Taurina</b></a></header>
